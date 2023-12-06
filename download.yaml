@@ -1,0 +1,635 @@
+openapi: 3.0.0
+info:
+  title: Customer Management
+  version: '4.0'
+  description: Customer API build based on TMF Customer Management specification
+servers: []
+paths:
+  /tmf-api/v1/customer:
+    post:
+      summary: Creates a 'Customer'
+      tags:
+        - customer
+      operationId: createCustomer
+      requestBody:
+        description: The Customer to be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+            examples:
+              Create Customer Demo:
+                value:
+                  '@type': Customer
+                  id: CUSTOMER_ID_001
+                  name: Customer Demo
+                  status: Approved
+                  statusReason: Account details checked
+                  validFor:
+                    startDateTime: '2018-06-12T00:00:00Z'
+                  engagedParty:
+                    '@referredType': Organization
+                    id: CUSTOMER_ID_001
+                    name: Customer Demo
+                    isHeadOffice: false
+                    isLegalEntity: true
+                    tradingName: Office 001 Pty Ltd
+                    nameType: Pty Ltd
+                    organisationType: Corporate
+                    partyCharacteristic:
+                      - name: fidelityProgram
+                        value: premium
+                        valueType: string
+                  account:
+                    - '@referredType': BillingAccount
+                      description: This account ...
+                      id: CUSTOMER_ID_001
+                      name: Account Demo
+                  paymentMethod:
+                    - '@referredType': CreditCardPayment
+                      id: '9562'
+                      name: professional payment
+                  contactMedium:
+                    - preferred: false
+                      mediumType: PostalContact
+                      validFor:
+                        startDateTime: '2018-06-13T00:00:00Z'
+                        endDateTime: '2019-01-11T00:00:00Z'
+                      characteristic:
+                        city: Paris
+                        street1: 15 Rue des Canards
+                        postCode: '75014'
+                        country: France
+                        contactType: home
+                        contactName: Alain delon
+                    - preferred: false
+                      mediumType: MobileContact
+                      validFor:
+                        startDateTime: '2018-06-13T00:00:00Z'
+                        endDateTime: '2030-01-11T00:00:00Z'
+                      characteristic:
+                        mobileNumber: '1234567890'
+                    - preferred: false
+                      mediumType: PhoneContact
+                      validFor:
+                        startDateTime: '2018-06-13T00:00:00Z'
+                        endDateTime: '2025-01-11T00:00:00Z'
+                      characteristic:
+                        phoneNumber: '039876543'
+                    - preferred: true
+                      mediumType: EmailContact
+                      validFor:
+                        startDateTime: '2018-06-13T00:00:00Z'
+                        endDateTime: '2025-01-11T00:00:00Z'
+                      characteristic:
+                        emailAddress: alain.delon@best-actor.fr
+                  characteristic:
+                    - name: market segment
+                      value: Enterprise
+                      valueType: string
+                    - name: security level
+                      value: '0'
+                      valueType: integer
+                    - name: billing cycle
+                      value: 1st of every month
+                      valueType: string
+                    - name: currency
+                      value: AUD
+                      valueType: string
+                    - name: locale
+                      value: en_AU
+                      valueType: string
+                  creditProfile:
+                    - creditProfileDate: '2018-06-15T00:00:00Z'
+                      creditRiskRating: 4
+                      creditScore: 5
+                      validFor:
+                        startDateTime: '2018-06-13T00:00:00Z'
+                        endDateTime: '2025-01-11T00:00:00Z'
+                  agreement:
+                    - '@referredType': Agreement
+                      id: '4721'
+                      name: Summer Contract Agreement
+        required: true
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: customer
+      description: ''
+    parameters: []
+  '/tmf-api/v1/customer/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    put:
+      summary: Updates a 'Customer'
+      tags:
+        - customer
+      operationId: updateCustomer
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+            examples:
+              Update Customer:
+                value:
+                  '@type': Customer
+                  id: CUSTOMER_ID_001
+                  name: Customer Demo
+                  status: Approved
+                  statusReason: Account details checked
+                  validFor:
+                    startDateTime: '2018-06-12T00:00:00Z'
+                  engagedParty:
+                    '@referredType': Organization
+                    id: CUSTOMER_ID_001
+                    name: Customer Demo
+                    isHeadOffice: false
+                    isLegalEntity: true
+                    tradingName: Office 001 Pty Ltd
+                    nameType: Pty Ltd
+                    organisationType: Corporate
+                    partyCharacteristic:
+                      - name: fidelityProgram
+                        value: premium
+                        valueType: string
+                  account:
+                    - '@referredType': BillingAccount
+                      description: This account ...
+                      id: CUSTOMER_ID_001
+                      name: Account Demo
+                  paymentMethod:
+                    - '@referredType': CreditCardPayment
+                      id: '9562'
+                      name: professional payment
+                  contactMedium:
+                    - preferred: false
+                      mediumType: PostalContact
+                      validFor:
+                        startDateTime: '2018-06-13T00:00:00Z'
+                        endDateTime: '2019-01-11T00:00:00Z'
+                      characteristic:
+                        city: Paris
+                        street1: 15 Rue des Canards
+                        postCode: '75014'
+                        country: France
+                        contactType: home
+                        contactName: Alain delon
+                    - preferred: false
+                      mediumType: MobileContact
+                      validFor:
+                        startDateTime: '2018-06-13T00:00:00Z'
+                        endDateTime: '2030-01-11T00:00:00Z'
+                      characteristic:
+                        mobileNumber: '1234567890'
+                    - preferred: false
+                      mediumType: PhoneContact
+                      validFor:
+                        startDateTime: '2018-06-13T00:00:00Z'
+                        endDateTime: '2025-01-11T00:00:00Z'
+                      characteristic:
+                        phoneNumber: '039876543'
+                    - preferred: true
+                      mediumType: EmailContact
+                      validFor:
+                        startDateTime: '2018-06-13T00:00:00Z'
+                        endDateTime: '2025-01-11T00:00:00Z'
+                      characteristic:
+                        emailAddress: alain.delon@best-actor.fr
+                  characteristic:
+                    - name: market segment
+                      value: Enterprise
+                      valueType: string
+                    - name: security level
+                      value: '0'
+                      valueType: integer
+                    - name: billing cycle
+                      value: 1st of every month
+                      valueType: string
+                    - name: currency
+                      value: AUD
+                      valueType: string
+                    - name: locale
+                      value: en_AU
+                      valueType: string
+                  creditProfile:
+                    - creditProfileDate: '2018-06-15T00:00:00Z'
+                      creditRiskRating: 4
+                      creditScore: 5
+                      validFor:
+                        startDateTime: '2018-06-13T00:00:00Z'
+                        endDateTime: '2025-01-11T00:00:00Z'
+                  agreement:
+                    - '@referredType': Agreement
+                      id: '4721'
+                      name: Summer Contract Agreement
+        description: The Customer to be updated
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        '@type':
+          type: string
+          description: 'When sub-classing, this defines the sub-class entity name'
+        href:
+          type: string
+          description: Url used to reference the party role.
+        id:
+          type: string
+          description: Unique identifier for PartyRoles
+        name:
+          type: string
+          description: 'A word, term, or phrase by which the PartyRole is known and distinguished from other PartyRoles.'
+        status:
+          type: string
+          description: Used to track the lifecycle status of the party role.
+        statusReason:
+          type: string
+          description: 'A string providing an explanation on the value of the status lifecycle. For instance if the status is Rejected, statusReason will provide the reason for rejection.'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        engagedParty:
+          $ref: '#/components/schemas/PartyRef'
+        type:
+          $ref: '#/components/schemas/RoleTypeRef'
+        account:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountRef'
+        paymentMethod:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentMethodRef'
+        contactMedium:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMedium'
+        characteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        creditProfile:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditProfile'
+        agreement:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgreementRef'
+        relatedParty:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedPartyRef'
+      required:
+        - id
+        - name
+        - engagedParty
+        - contactMedium
+      x-examples: {}
+    TimePeriod:
+      type: object
+      properties:
+        endDateTime:
+          type: string
+          description: 'An instant of time, ending at the TimePeriod.'
+          format: date-time
+        startDateTime:
+          type: string
+          description: 'An instant of time, starting at the TimePeriod'
+          format: date-time
+      description: A base / value business entity used to represent a period of time between two timepoints.
+    PartyRef:
+      type: object
+      description: Party reference. A party represents an organisation or an individual.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the organisation
+        href:
+          type: string
+          description: Hyperlink to access the organisation
+        isHeadOffice:
+          type: boolean
+          description: 'If value is true, the organisation is the head office'
+        isLegalEntity:
+          type: boolean
+          description: 'If value is true, the organisation is a legal entity known by a national referential.'
+        name:
+          type: string
+          description: Organisation name (department name for example)
+        nameType:
+          type: string
+          description: 'Type of the name : Co, Inc, Ltd,…'
+        organisationType:
+          type: string
+          description: 'Type of Organisation (company, department...)'
+        tradingName:
+          type: string
+          description: Name that the organisation (unit) trades under
+        existsDuring:
+          $ref: '#/components/schemas/TimePeriod'
+        status:
+          $ref: '#/components/schemas/OrganisationStateType'
+        description:
+          type: string
+          description: Text describing the referred party
+        partyCharacteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        '@baseType':
+          type: string
+          description: 'When sub-classing, this defines the super-class'
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes and relationships
+          format: uri
+        '@type:':
+          type: string
+          description: 'When sub-classing, this defines the sub-class entity name'
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      required:
+        - id
+        - name
+        - nameType
+        - organisationType
+        - tradingName
+        - '@referredType'
+    RoleTypeRef:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the role type. It uniquely identifies the role type within the partnership type.
+        partnershipHref:
+          type: string
+          description: Reference url of the partnership type containing the role type
+        partnershipId:
+          type: string
+          description: The identifier of the partnership type containing the role type
+        partnershipName:
+          type: string
+          description: The name of the partnership type defining this role type
+      description: RoleType reference.
+    AccountRef:
+      type: object
+      description: Account reference. A account may be a party account or an account receivable.
+      properties:
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+        description:
+          type: string
+          description: Detailed description of the account
+        href:
+          type: string
+          description: Reference of the account
+        id:
+          type: string
+          description: Unique identifier of the account
+        name:
+          type: string
+          description: Name of the account
+      required:
+        - '@referredType'
+        - id
+    PaymentMethodRef:
+      type: object
+      description: PaymentMethod reference. A payment method defines a specific mean of payment (e.g direct debit).
+      properties:
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+        href:
+          type: string
+          description: Reference of the payment mean
+        id:
+          type: string
+          description: Unique identifier of the payment mean
+        name:
+          type: string
+          description: Name of the payment mean
+    ContactMedium:
+      type: object
+      description: Indicates the contact medium that could be used to contact the party.
+      properties:
+        preferred:
+          type: boolean
+          description: 'If true, indicates that is the preferred contact medium'
+        mediumType:
+          type: string
+          description: 'Type of the contact medium, such as: email address, telephone number, postal address'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        characteristic:
+          $ref: '#/components/schemas/MediumCharacteristic'
+      required:
+        - mediumType
+        - characteristic
+    Characteristic:
+      type: object
+      description: Describes a given characteristic of an object or entity through a name/value pair.
+      properties:
+        name:
+          type: string
+          description: Name of the characteristic
+        value:
+          type: string
+          description: Value of the characteristic
+        valueType:
+          type: string
+          description: Data type of the value of the characteristic.
+    CreditProfile:
+      type: object
+      properties:
+        creditProfileDate:
+          type: string
+          description: The date the profile was established
+          format: date-time
+        creditRiskRating:
+          type: integer
+          description: This is an integer whose value is used to rate the risk
+        creditScore:
+          type: integer
+          description: A measure of a person's or an organisation's creditworthiness calculated on the basis of a combination of factors such as their income and credit history.
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+      description: 'Credit profile for the party (containing credit scoring, ...). By default only the current credit profile  is retrieved. It can be used as a list to give the party credit profiles history, the first one in the list will be the current one.'
+    AgreementRef:
+      type: object
+      description: 'Agreement reference. An agreement represents a contract or arrangement, either written or verbal and sometimes enforceable by law, such as a service level agreement or a customer price agreement. An agreement involves a number of other business entities, such as products, services, and resources and/or their specifications.'
+      properties:
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+        href:
+          type: string
+          description: Reference of the agreement
+        id:
+          type: string
+          description: Identifier of the agreement
+        name:
+          type: string
+          description: Name of the agreement
+    RelatedPartyRef:
+      type: object
+      description: RelatedParty reference. A related party defines party or partyrole linked to a specific entity.
+      properties:
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+        href:
+          type: string
+          description: 'Reference of the related party, could be a party reference or a party role reference'
+        id:
+          type: string
+          description: Unique identifier of a related party
+        name:
+          type: string
+          description: Name of the related party
+        role:
+          type: string
+          description: Role of the related party.
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+    MediumCharacteristic:
+      type: object
+      description: Describes the contact medium characteristics that could be used to contact a party (an individual or an organisation)
+      properties:
+        city:
+          type: string
+          description: The city
+        contactType:
+          type: string
+          description: 'The type of contact, for example: phone number such as mobile, fixed home, fixed office. postal address such as shipping instalation…'
+        contactName:
+          type: string
+          description: The name of the contact
+        country:
+          type: string
+          description: The country
+        emailAddress:
+          type: string
+          description: Full email address in standard format
+        faxNumber:
+          type: string
+          description: The fax number of the contact
+        phoneNumber:
+          type: string
+          description: The primary phone number of the contact
+        postCode:
+          type: string
+          description: Postcode
+        socialNetworkId:
+          type: string
+          description: Identifier as a member of a social network
+        stateOrProvince:
+          type: string
+          description: State or province
+        street1:
+          type: string
+          description: Describes the street
+        street2:
+          type: string
+          description: Complementary street description
+        mobileNumber:
+          type: string
+        '@baseType':
+          type: string
+          description: 'When sub-classing, this defines the super-class'
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes and relationships
+          format: uri
+        '@type':
+          type: string
+          description: 'When sub-classing, this defines the sub-class entity name'
+    Error:
+      required:
+        - code
+        - message
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An integer coding the error type. This is given to caller so he can translate them if required.
+        message:
+          type: string
+          description: A short localized string that describes the error.
+        description:
+          type: string
+          description: '(optional) A long localized error description if needed. It can contain precise information about which parameter is missing, or what are the identifier acceptable values.'
+        infoURL:
+          type: string
+          description: (optional) A URL to online documentation that provides more information about the error.
+    OrganisationStateType:
+      title: OrgansationStateType
+      x-stoplight:
+        id: e91d74dfbca01
+      type: string
+      description: Valid values for the lifecycle state of the organisation
+      enum:
+        - initialized
+        - validated
+        - closed
+  securitySchemes:
+    Authorization:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+security:
+  - Authorization: []
